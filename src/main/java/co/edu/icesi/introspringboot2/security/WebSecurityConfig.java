@@ -1,6 +1,5 @@
 package co.edu.icesi.introspringboot2.security;
 
-
 import co.edu.icesi.introspringboot2.filter.JwtAuthenticationFilter;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,15 +30,15 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable())
-                .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(
-                        auth -> auth
-                                .requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
-                                .requestMatchers("/api/v1/auth/**").permitAll()
-                                .anyRequest().authenticated()
-                );
-         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+            .csrf(csrf -> csrf.disable())
+            .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .authorizeHttpRequests(
+                auth -> auth
+                    .requestMatchers("/", "/css/**", "/js/**", "/images/**", "/api/v1/auth/**").permitAll()
+                    .anyRequest().authenticated()
+            );
+
+        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 
@@ -47,5 +46,4 @@ public class WebSecurityConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
-
 }

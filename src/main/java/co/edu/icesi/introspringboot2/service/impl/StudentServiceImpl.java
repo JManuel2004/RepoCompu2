@@ -87,4 +87,11 @@ public class StudentServiceImpl implements StudentService {
         return studentMapper.toDTO(studentRepository.save(student));
     }
 
+    @Override
+    public Page<StudentDTO> getStudentsPaginatedAndSorted(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return studentRepository.findAllByOrderByNameAsc(pageable)
+                .map(studentMapper::toDTO);
+    }
+
 }

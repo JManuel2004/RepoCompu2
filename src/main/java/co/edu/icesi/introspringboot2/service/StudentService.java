@@ -18,4 +18,5 @@ public interface StudentService {
     StudentDTO getStudentByID(long id);
     StudentDTO getStudentByCode(String code);
     StudentDTO updateStudent(Long id, StudentDTO studentDTO);
-}
+    Page<StudentDTO> getStudentsPaginatedAndSorted(int page, int size);
+}   
